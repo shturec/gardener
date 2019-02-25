@@ -52,6 +52,9 @@ spec:
         - --audit-policy-file=/etc/kubernetes/audit/audit-policy.yaml
         - --audit-log-maxsize=100
         - --audit-log-maxbackup=5
+        {{- if semverCompare ">= 1.13" .Values.kubernetesVersion }}
+        - --audit-dynamic-configuration=true
+        {{- else }}        
         - --authorization-mode=Node,RBAC
         - --basic-auth-file=/srv/kubernetes/auth/basic_auth.csv
         - --client-ca-file=/srv/kubernetes/ca/ca.crt
